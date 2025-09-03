@@ -1,0 +1,56 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: testerh_app
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - DB_HOST=db
+      - DB_DATABASE=testerh
+      - DB_USERNAME=testerh
+      - DB_PASSWORD=testerh
+    networks:
+      - testerh
+
+  db:
+    image: mysql:8.0
+    container_name: testerh_db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: testerh
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: testerh
+      MYSQL_PASSWORD: testerh
+    ports:
+      - "3307:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - testerh
+
+  node:
+    image: node:18
+    container_name: testerh_node
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    command: sh -c "npm install && npm run dev"
+    networks:
+      - testerh
+
+volumes:
+  dbdata:
+
+networks:
+  testerh:
+    driver: bridge

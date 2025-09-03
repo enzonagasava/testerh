@@ -1,0 +1,48 @@
+# !/database/migrations/factories
+# !/database/migrations/seeders
+# !/database/migrations/note.txt
+# /.phpunit.cache
+
+# /public
+# /track
+
+/node_modules
+/vendor
+# /public/build
+/public/hot
+/public/storage
+#/public/images/logo
+
+# /public/uploads/*
+
+/public/fonts/
+
+/public/uploads/*
+# /vendor
+# .htaccess
+error_log
+.env
+.env.backup
+.env.production
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+auth.json
+npm-debug.log
+yarn-error.log
+/.fleet
+/.idea
+/.vscode
+
+/storage/logs/*
+/storage/logs/laravel.log
+peoplepro.zip
+saasinapp.zip
+vendorSAAS.zip
+# git rm -r --cached database/migrations
+
+.use.ini
+php.ini
+
+composer.lock
+package-lock.json
