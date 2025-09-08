@@ -22,6 +22,13 @@
       0 => 'Barryvdh\\DomPDF\\ServiceProvider',
     ),
   ),
+  'creagia/laravel-sign-pad' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Creagia\\LaravelSignPad\\LaravelSignPadServiceProvider',
+    ),
+  ),
   'joedixon/laravel-translation' => 
   array (
     'providers' => 

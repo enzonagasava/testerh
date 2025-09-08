@@ -105,6 +105,13 @@ date.datepicker({
         $('#immigration_action_button').val('{{trans('Add')}}');
         $('#immigration_action').val('{{trans('Add')}}');
         $('#ImmigrationformModal').modal('show');
+
+        const canvas = document.getElementById('assinatura-pad');
+        const signaturePad = new SignaturePad(canvas, {
+            backgroundColor: 'rgb(255, 255, 255)'
+        });
+
+        signaturePad.clear();
     });
 
     $('#immigration_sample_form').on('submit', function (event) {
@@ -182,12 +189,11 @@ date.datepicker({
     });
 
 
-    $(document).on('click', '.immigration_edit', function () {
+    {{-- $(document).on('click', '.immigration_edit', function () {
 
         var id = $(this).attr('id');
 
         var target = "{{ route('immigrations.index') }}/" + id + '/edit';
-
 
         $.ajax({
             url: target,
@@ -201,22 +207,21 @@ date.datepicker({
                 $('#immigration_expiry_date').val(html.data.expiry_date);
                 $('#immigration_eligible_review_date').val(html.data.eligible_review_date);
                 $('#immigration_document_type_id').selectpicker('val', html.data.document_type_id);
-                $('#immigration_country').selectpicker('val', html.data.country_id);
-
+                $('#immigration_country').selectpicker('val', html.data.country_id); --}}
 
 {{--                if(html.data.document_file){--}}
 {{--                let d_link = '{{ route('immigrations_document.download')}}/' + id;--}}
 {{--                $('#stored_immigration_document').html('<a href="'+d_link+'"><b>Download</b></a>');--}}
 {{--                }--}}
 
-                $('#immigration_hidden_id').val(html.data.id);
+                {{-- $('#immigration_hidden_id').val(html.data.id);
                 $('.modal-title').text('{{trans('Edit')}}');
                 $('#immigration_action_button').val('{{trans('Edit')}}');
                 $('#immigration_action').val('{{trans('Edit')}}');
                 $('#ImmigrationformModal').modal('show');
             }
         });
-    });
+    }); --}}
 
 
     let immigration_delete_id;

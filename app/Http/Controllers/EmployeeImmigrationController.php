@@ -105,6 +105,13 @@ class EmployeeImmigrationController extends Controller {
 			$data ['eligible_review_date'] = $request->eligible_review_date;
 			$data['country_id'] = $request->country;
 
+            // dd($request->employee_signature);
+
+            if ($request->employee_signature) {
+                $data['employee_signature'] = $request->employee_signature;
+                $data['employee_signed_at'] = now();
+            }
+
 			$file = $request->document_file;
 
 			$file_name = null;
@@ -178,6 +185,11 @@ class EmployeeImmigrationController extends Controller {
 			$data ['expiry_date'] = $request->expiry_date;
 			$data ['eligible_review_date'] = $request->eligible_review_date;
 			$data['country_id'] = $request->country;
+
+            if ($request->employee_signature) {
+                $data['employee_signature'] = $request->employee_signature;
+                $data['employee_signed_at'] = now();
+            }
 
 			$file = $request->document_file;
 
