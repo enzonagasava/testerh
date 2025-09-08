@@ -112,6 +112,11 @@ class EmployeeImmigrationController extends Controller {
                 $data['employee_signed_at'] = now();
             }
 
+            if ($request->internal_user_signature) {
+                $data['internal_user_signature'] = $request->internal_user_signature;
+                $data['internal_user_signed_at'] = now();
+            }
+
 			$file = $request->document_file;
 
 			$file_name = null;
@@ -159,23 +164,12 @@ class EmployeeImmigrationController extends Controller {
 					'document_type_id' => 'required',
 					'document_file' => 'nullable|file|max:10240|mimes:jpeg,png,jpg,gif,ppt,pptx,doc,docx,pdf',
 				]
-//				,
-//				[
-//					'document_number.required' => 'Document Number can not be empty',
-//					'document_number.unique' => 'Document Number must be unique',
-//					'document_type_id.required' => 'Please select document Type',
-//					'document_file.file'=>'File is not valid',
-//					'document_file.max'=>'File must be less than 10 mb',
-//					'document_file.mimes'=>'File must be of (jpeg,png,jpg,gif,ppt,pptx,doc,docx,pdf) type',
-//				]
 			);
-
 
 			if ($validator->fails())
 			{
 				return response()->json(['errors' => $validator->errors()->all()]);
 			}
-
 
 			$data = [];
 
@@ -186,9 +180,16 @@ class EmployeeImmigrationController extends Controller {
 			$data ['eligible_review_date'] = $request->eligible_review_date;
 			$data['country_id'] = $request->country;
 
+            $data['employee_signature'] = $request->employee_signature;
+
             if ($request->employee_signature) {
-                $data['employee_signature'] = $request->employee_signature;
                 $data['employee_signed_at'] = now();
+            }
+
+            $data['internal_user_signature'] = $request->internal_user_signature;
+
+            if ($request->internal_user_signature) {
+                $data['internal_user_signed_at'] = now();
             }
 
 			$file = $request->document_file;

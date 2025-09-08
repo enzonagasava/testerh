@@ -101,18 +101,41 @@
                             </div>
 
                             <div class="col-12 form-group mt-3">
-                                <div class="form-group">
-                                    <label for="assinatura-pad">Por favor, assine no campo abaixo:</label><br>
-                                    <canvas id="assinatura-pad" class="signature-canvas border"></canvas>
-                                    <small class="form-text text-muted">Use o mouse ou o dedo para desenhar sua
-                                        assinatura.</small>
-                                    <input type="hidden" name="employee_signature" id="employee_signature">
-                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="assinatura-pad">Por favor, assine no campo abaixo:</label><br>
+                                            <canvas id="assinatura-pad" class="signature-canvas border"></canvas>
+                                            <small class="form-text text-muted">Use o mouse ou o dedo para desenhar sua
+                                                assinatura.</small>
+                                            @if($usertype != 2)
+                                                <input type="hidden" name="internal_user_signature" id="internal_user_signature">
+                                            @else
+                                                <input type="hidden" name="employee_signature" id="employee_signature">
+                                            @endif
+                                        </div>
 
-                                <div class="d-flex justify-content-between">
-                                    <button type="button" id="limpar-assinatura" class="btn btn-sm btn-danger">
-                                        Limpar Assinatura
-                                    </button>
+                                        <div class="d-flex justify-content-between">
+                                            <button type="button" id="limpar-assinatura" class="btn btn-sm btn-danger">
+                                                Limpar Assinatura
+                                            </button>
+                                        </div>
+                                    </div>
+                                    @if ($usertype != 2)
+                                        <div class="col-6">
+                                            <div class="border p-3">
+                                                <img src="" id="employee_signature_img" alt="">
+                                                <p class="text-sm text-center">Assinatura do Funcionário</p>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="col-6">
+                                            <div class="border p-3">
+                                                <img src="" id="internal_user_signature_img" alt="">
+                                                <p class="text-sm text-center">Assinatura do Gestor</p>
+                                            </div>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
 
@@ -161,7 +184,7 @@
             backgroundColor: 'rgb(255, 255, 255)'
         });
 
-        const employeeSignatureInput = $('#employee_signature').val();
+        const employeeSignatureInput = $('#internal_user_signature').val();
 
         $(document).ready(function() {
             $('#limpar-assinatura').on('click', function() {
@@ -176,7 +199,10 @@
 
                 // Obtém a assinatura em formato de URL de dados (base64)
                 const signatureData = signaturePad.toDataURL();
-                $('#employee_signature').val(signatureData);
+
+                @if($usertype != 2)
+                    $('#internal_user_signature').val(signatureData);
+                @endif
             });
         })
 
@@ -204,6 +230,12 @@
 
                     if (html.data.employee_signature) {
                         signaturePad.fromDataURL(html.data.employee_signature, {width: 300, height: 100});
+                        $('#employee_signature_img').attr('src', html.data.employee_signature);
+                    }
+
+                    if (html.data.internal_user_signature) {
+                        signaturePad.fromDataURL(html.data.internal_user_signature, {width: 300, height: 100});
+                        $('#internal_user_signature_img').attr('src', html.data.internal_user_signature);
                     }
 
                     $('#immigration_hidden_id').val(html.data.id);
