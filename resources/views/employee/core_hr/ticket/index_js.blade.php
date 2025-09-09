@@ -45,7 +45,7 @@
                 data: 'ticket_details',
                 name: 'ticket_details',
                 render: function (data, type, row) {
-                    return data + "<td><div class = 'badge badge-success'>" + row.ticket_status + "</div></td>";
+                    return data + "</br><div class = 'badge badge-success'>" + row.ticket_status + "</div>";
                 }
             },
             {
@@ -96,4 +96,11 @@
     });
     new $.fn.dataTable.FixedHeader(table_table);
 
+    $(document).on('click', '.document_view', function(){
+        var docUrl = $(this).data('link');
+
+        $('.modal-title').text('{{__('View Document')}}');
+        $('#document_view_modal2 iframe').attr('src',docUrl);
+        $('#document_view_modal2').modal('show');
+    })
 

@@ -76,16 +76,16 @@ class EmployeeImmigrationController extends Controller {
 				[
 					'document_number' => 'required|unique:employee_immigrations',
 					'document_type_id' => 'required',
-					'document_file' => 'required|file|max:10240|mimes:jpeg,png,jpg,gif,ppt,pptx,doc,docx,pdf',
+					'document_file' => 'required|file|mimes:jpeg,png,jpg,gif,ppt,pptx,doc,docx,pdf',
+                ],
+				[
+					'document_number.required' => 'O número do documento não pode estar vazio',
+					'document_number.unique' => 'O número do documento deve ser único',
+					'document_type_id.required' => 'Por favor, selecione o tipo de documento',
+					'document_file.file'=>'Arquivo inválido',
+					'document_file.max'=>'O arquivo deve ter menos de 120 MB',
+					'document_file.mimes'=>'O arquivo deve ser do tipo (jpeg,png,jpg,gif,ppt,pptx,doc,docx,pdf)',
 				]
-//				[
-//					'document_number.required' => 'Document Number can not be empty',
-//					'document_number.unique' => 'Document Number must be unique',
-//					'document_type_id.required' => 'Please select document Type',
-//					'document_file.file'=>'File is not valid',
-//					'document_file.max'=>'File must be less than 10 mb',
-//					'document_file.mimes'=>'File must be of (jpeg,png,jpg,gif,ppt,pptx,doc,docx,pdf) type',
-//				]
 			);
 
 
@@ -150,18 +150,16 @@ class EmployeeImmigrationController extends Controller {
 				[
 					'document_number' => 'required|unique:employee_immigrations,document_number,' . $id,
 					'document_type_id' => 'required',
-					'document_file' => 'nullable|file|max:10240|mimes:jpeg,png,jpg,gif,ppt,pptx,doc,docx,pdf',
-				]
-//				,
-//				[
-//					'document_number.required' => 'Document Number can not be empty',
-//					'document_number.unique' => 'Document Number must be unique',
-//					'document_type_id.required' => 'Please select document Type',
-//					'document_file.file'=>'File is not valid',
-//					'document_file.max'=>'File must be less than 10 mb',
-//					'document_file.mimes'=>'File must be of (jpeg,png,jpg,gif,ppt,pptx,doc,docx,pdf) type',
-//				]
-			);
+					'document_file' => 'nullable|file|mimes:jpeg,png,jpg,gif,ppt,pptx,doc,docx,pdf',
+                ],
+				[
+					'document_number.required' => 'O número do documento não pode estar vazio',
+					'document_number.unique' => 'O número do documento deve ser único',
+					'document_type_id.required' => 'Por favor, selecione o tipo de documento',
+					'document_file.file'=>'Arquivo inválido',
+					'document_file.max'=>'O arquivo deve ter menos de 120 MB',
+					'document_file.mimes'=>'O arquivo deve ser do tipo (jpeg,png,jpg,gif,ppt,pptx,doc,docx,pdf)',
+				]			);
 
 
 			if ($validator->fails())
