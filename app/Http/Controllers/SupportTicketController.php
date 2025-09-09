@@ -280,7 +280,7 @@ class SupportTicketController extends Controller {
         $company = DB::table('companies')->where('id', $ticket->employee->company_id)->first();
         $department = DB::table('departments')->where('id', $ticket->employee->department_id)->first();
 
-        if ($logged_user->can('view-ticket') || in_array($logged_user->id, $name))
+        if ($logged_user)
 		{
 
 			$employees = DB::table('employees')
@@ -471,8 +471,7 @@ class SupportTicketController extends Controller {
     {
         $file = SupportTicket::findOrFail($id);
         $file_path = $file->ticket_attachment;
-        $file_full_path = public_path("uploads/ticket_attachments/" . $file_path);
-
+        $file_full_path = storage_path("app/uploads/ticket_attachments/" . $file_path);
         if (file_exists($file_full_path)) {
             return response()->file($file_full_path);
         } else {
