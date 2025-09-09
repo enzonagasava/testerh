@@ -180,15 +180,13 @@ class EmployeeImmigrationController extends Controller {
 			$data ['eligible_review_date'] = $request->eligible_review_date;
 			$data['country_id'] = $request->country;
 
-            $data['employee_signature'] = $request->employee_signature;
-
             if ($request->employee_signature) {
+                $data['employee_signature'] = $request->employee_signature;
                 $data['employee_signed_at'] = now();
             }
 
-            $data['internal_user_signature'] = $request->internal_user_signature;
-
             if ($request->internal_user_signature) {
+                $data['internal_user_signature'] = $request->internal_user_signature;
                 $data['internal_user_signed_at'] = now();
             }
 

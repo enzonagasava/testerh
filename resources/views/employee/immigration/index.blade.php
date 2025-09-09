@@ -184,25 +184,22 @@
             backgroundColor: 'rgb(255, 255, 255)'
         });
 
-        const employeeSignatureInput = $('#internal_user_signature').val();
-
         $(document).ready(function() {
             $('#limpar-assinatura').on('click', function() {
                 signaturePad.clear();
             });
 
             $('form').on('submit', function(e) {
-                if (signaturePad.isEmpty()) {
-                    alert("Por favor, forneça sua assinatura.");
-                    return false;
+                if (!signaturePad.isEmpty()) {
+                    // Obtém a assinatura em formato de URL de dados (base64)
+                    const signatureData = signaturePad.toDataURL();
+
+                    @if($usertype != 2)
+                        $('#internal_user_signature').val(signatureData);
+                    @else
+                        $('#employee_signature').val(signatureData);
+                    @endif
                 }
-
-                // Obtém a assinatura em formato de URL de dados (base64)
-                const signatureData = signaturePad.toDataURL();
-
-                @if($usertype != 2)
-                    $('#internal_user_signature').val(signatureData);
-                @endif
             });
         })
 
