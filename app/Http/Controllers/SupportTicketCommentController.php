@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class SupportTicketCommentController extends Controller {
 
@@ -46,14 +47,17 @@ class SupportTicketCommentController extends Controller {
 	}
 
 
-	public
-	function store(Request $request, SupportTicket $ticket)
+	public function store(Request $request, SupportTicket $ticket)
 	{
 
-		$validator = Validator::make($request->only('ticket_comments'),
+		$validator = Validator::make($request->only('ticket_comments', 'ticket_attachments'),
 			[
-				'ticket_comments' => 'required',
-			]
+				'ticket_comments' => 'sometimes|string',
+                'ticket_attachments' => 'sometimes|file|mimes:jpeg,png,jpg,gif,svg,pdf,doc,docx,txt',
+            ], [
+                'ticket_attachments.mimes' => 'O arquivo deve ser um arquivo do tipo: jpeg, png, jpg, gif, svg, pdf, doc, docx, txt',
+                'ticket_attachments.max' => 'O arquivo não deve ser maior que 120MB',
+            ]
 		);
 
 
@@ -68,7 +72,27 @@ class SupportTicketCommentController extends Controller {
 		$data['user_id'] = auth()->user()->id;
 		$data ['ticket_id'] = $ticket->id;
 
-		TicketComments::create($data);
+		$file_name = null;
+		if ($request->hasFile('ticket_attachments')) {
+			$file = $request->file('ticket_attachments');
+			$file_name = 'ticket_' . $ticket->ticket_code . '.' . $file->getClientOriginalExtension();
+
+			// Verifica se a pasta existe, se não, cria
+			if (!Storage::disk('local')->exists('uploads/ticket_attachments')) {
+				Storage::disk('local')->makeDirectory('uploads/ticket_attachments');
+			}
+
+			$file->storeAs('uploads/ticket_attachments', $file_name, 'local');
+			$data['ticket_attachment'] = $file_name;
+		}
+
+        if(!empty($data['ticket_comments'])){
+            TicketComments::create($data);
+        }
+
+        if($file_name){
+            SupportTicket::where('id', $ticket->id)->update(['ticket_attachment' => $file_name]);
+        }
 
 		return response()->json(['success' => __('Data Added successfully.')]);
 	}

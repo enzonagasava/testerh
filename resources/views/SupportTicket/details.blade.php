@@ -74,7 +74,7 @@
                                     <div class="row">
                                         <div class="col-md-10">
 
-                                            <div class="col-md-8">
+                                            <div class="mt-1">
                                                 <div class="form-group">
                                                     <label><b>{{trans('Description')}}</b></label>
                                                     <br>
@@ -121,11 +121,17 @@
 
                                 <div class="tab-pane fade" id="Comments" role="tabpanel" aria-labelledby="comments-tab">
                                     <span id="comments_result"></span>
-                                    <form method="post" id="comments_form" class="form-horizontal">
+                                    <form method="post" id="comments_form" class="form-horizontal" enctype="multipart/form-data">
                                         @csrf
+                                        <div class="mt-1 form-group hide_edit">
+                                            <label>{{__('Ticket Attachments')}} </label>
+                                            <input type="file" name="ticket_attachments" id="ticket_attachments"
+                                                class="form-control">
+                                        </div>
+
                                         <div class="form-group">
                                             <label>{{trans('Comments')}}</label>
-                                            <textarea required class="form-control" id="ticket_comments"
+                                            <textarea class="form-control" id="ticket_comments"
                                                       name="ticket_comments" rows="3"></textarea>
                                         </div>
 

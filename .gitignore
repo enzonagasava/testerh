@@ -18,7 +18,6 @@
 /public/fonts/
 
 /public/uploads/*
-# /vendor
 # .htaccess
 error_log
 .env
@@ -46,3 +45,5 @@ php.ini
 
 composer.lock
 package-lock.json
+bootstrap/cache/packages.php
+bootstrap/cache/services.php
