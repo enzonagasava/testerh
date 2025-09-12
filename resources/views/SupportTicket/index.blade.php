@@ -403,7 +403,7 @@
         });
 
         $(document).ready(function () {
-
+            $('#ticket_status').val('aberto');
             var table_table = $('#ticket-table').DataTable({
                 initComplete: function () {
                     this.api().columns([1]).every(function () {
