@@ -58,7 +58,7 @@ class TicketCreatedNotification extends Notification
     {
         return [
             'data'=> __('A ticket has been issued for ') .$this->ticket->employee->full_name,
-			'link'=> route('tickets.show',$this->ticket),
+			'link'=> route('tickets.show',$this->ticket, false),
 		];
     }
 }
